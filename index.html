@@ -190,9 +190,17 @@
 				}
 			}
 		};
+		var today
 
-		var today = new Date();//Get today's date
-
+		if (window.location.hash){
+			try{
+				today = new Date(window.location.hash.replace(/^#/,""));//Try to load the date from the hash in the address
+			}catch(err){
+			}
+		}
+		if (today == "Invalid Date" || !today){// Did we fail at getting a valid date from the address bar?
+			var today = new Date();//Get today's date
+		}
 		var dayHeader = document.getElementById("theday"); //Grap the heading to put the day's name or message in...
 
 		var isspecial = specialdates.checkDate(today);//Check if today is a special day - returns an object if it is, undefined if not
@@ -241,7 +249,6 @@
     		player.setAttribute("height", window.innerHeight);
     		player.setAttribute("width", window.innerWidth);
 		}
-
 	</script>
 	<script type="text/javascript">
 
