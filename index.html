@@ -1,1 +1,180 @@
-<html><head><title>What Day is it?</title></head><body><h1>What day is it?</h1></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<!-- <meta name="description" content=""> -->
+    <meta name="viewport" content="width=device-width">
+
+	<title>What Day is it?</title>
+
+	<style>
+		@import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700);
+		html{
+			background:black;
+			margin:0;
+			padding:0;
+		}
+		body{
+			margin:0;
+			padding:0;
+		}
+		p#loading{
+			font-size:40px;
+			color:white;
+			font-family: "Noto Sans", sans-serif;
+			font-weight:400;
+			text-align: center;
+		}
+		div#ytplayer{
+			margin:0 auto;
+		}
+		h1{
+			font-family:"Noto Sans", sans-serif;
+			color:#fff;
+			font-weight:800;
+			font-size:100px;
+			padding:0;
+			margin:0;
+			position: absolute;
+			left:10px;
+			bottom:0px;
+			z-index: 100;
+		}
+		iframe {
+			margin:0 auto;
+			/*margin-top:20px;*/
+			position: absolute;
+
+		}
+	</style>
+</head>
+<body>
+	<h1 id="theday"></h1>
+	<div id="ytplayer"><p id="loading">please wait while the video loads...</p></div>
+	<script>
+		var weekdays = {
+			sunday: {
+				text:"sunday",
+				id:"kfVsfOSbJY0"
+			},
+			monday: {
+				text:"monday",
+				id:"h81Ojd3d2rY"
+			},
+			tuesday: {
+				text:"tuesday",
+				id:"fXE-u8ILjOU"
+			},
+			wednesday: {
+				text:"wednesday",
+				id:"f4KXUr9JVng"//
+			},
+			thursday: {
+				text:"thursday",
+				id:"8S227FFNwl8"
+			},
+			friday: {
+				text:"friday",
+				id:"kfVsfOSbJY0"
+			},
+			saturday: {
+				text:"saturday",
+				id:"8DNQRtmIMxk"
+			},
+			getDay: function(date){
+				switch(date.getDay()) {
+					case 0:
+						return this.sunday;
+						break;
+					case 1:
+						return this.monday;
+						break;
+					case 2:
+						return this.tuesday;
+						break;
+					case 3:
+						return this.wednesday;
+						break;
+					case 4:
+						return this.thursday;
+						break;
+					case 5:
+						return this.friday;
+						break;
+					case 6:
+						return this.saturday;
+						break;
+				}
+
+			}
+		};
+		var specialdates = {
+			dates: [
+				{
+					date: new Date("Dec 25, 2013"),
+					message: "Merry Christmas!",
+					id: "jZ-e3_31sdM"
+				},
+				{
+					date: new Date("Jan 1, 2013"),
+					message: "Happy New Year!",
+					id: "4e8vfRTsFU4"
+				}
+			],
+			checkDate: function(date){
+				for (var i = 0; i < this.dates.length; i++) {
+					if (date.getDate() == this.dates[i].date.getDate() && date.getMonth() == this.dates[i].date.getMonth()){
+						console.log(this.dates[i].id);
+						return this.dates[i];
+					}
+				}
+			}
+		};
+
+		var today = new Date();//Get today's date
+
+		var dayHeader = document.getElementById("theday"); //Grap the heading to put the day's name or message in...
+
+		var isspecial = specialdates.checkDate(today);//Check if today is a special day - returns an object if it is, undefined if not
+		var message
+		var theId
+
+		if (isspecial){
+			message = isspecial.message;
+			theId = isspecial.id;
+		} else{
+			message = weekdays.getDay(today).text;
+			theId = weekdays.getDay(today).id
+		}
+
+		dayHeader.innerHTML = message;
+
+  		// Load the IFrame Player API code asynchronously.
+		var tag = document.createElement('script');
+		tag.src = "https://www.youtube.com/player_api";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+		// Replace the 'ytplayer' element with an <iframe> and
+		// YouTube player after the API code downloads.
+		var player;
+		function onYouTubePlayerAPIReady() {
+			player = new YT.Player('ytplayer', {
+				videoId: theId,
+				height: window.innerHeight,
+				width: window.innerWidth,
+				playerVars: {
+					autoplay: 1,
+					controls: 0,
+					loop: 1,
+					rel: 0,
+					showinfo: 0,
+					iv_load_policy:3
+				}
+			});
+		}
+
+
+	</script>
+</body>
+</html>
