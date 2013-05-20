@@ -4,17 +4,17 @@
 	<meta charset="utf-8">
 	<!-- <meta name="description" content=""> -->
     <meta name="viewport" content="width=device-width">
-
+	<link rel="icon" type="image/png" href="http://richardbrunt.co.uk/favicon.png">
 	<title>What Day is it?</title>
-
 	<style>
-		@import url(http://fonts.googleapis.com/css?family=Noto+Sans:400,700);
+		@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+		@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,700);
 		html{
 			-webkit-font-smoothing: antialiased;/*Stops the text looking funky*/
 			background:black;
 			margin:0;
 			padding:0;
-			font-family:"Noto Sans", sans-serif;
+			font-family: "Open Sans", sans-serif;
 			color:white;
 		}
 		body{
@@ -29,6 +29,14 @@
 		div#ytplayer{
 			margin:0 auto;
 		}
+/*		div#cornerdate{
+			position:absolute;
+			top:0;
+			left:0;
+			z-index:1;
+			text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+			background:rgba(0,0,0,128);
+		}*/
 		h1{
 			font-weight:800;
 			font-size:100px;
@@ -38,6 +46,7 @@
 			left:10px;
 			bottom:0px;
 			z-index: 1;
+			font-family: "Ubuntu", sans-serif;
 		}
 		iframe {
 			margin:0 auto;
@@ -73,6 +82,9 @@
 	</style>
 </head>
 <body>
+<!-- 	<div id="cornerdate">
+		<p id="date"></p>
+	</div> -->
 	<h1 id="theday"></h1>
 	<div id="videowrapper">
 		<div id="ytplayer">
@@ -87,31 +99,31 @@
 		var weekdays = {
 			sunday: {
 				text:"sunday",
-				id:"kfVsfOSbJY0"
+				id:"G8nJ-KAiBeo"//Sunday Morning - Maroon 5
 			},
 			monday: {
 				text:"monday",
-				id:"h81Ojd3d2rY"
+				id:"h81Ojd3d2rY"//Monday Monday - The Mamas & The Papas
 			},
 			tuesday: {
 				text:"tuesday",
-				id:"fXE-u8ILjOU"
+				id:"fXE-u8ILjOU"//Sweet Tuesday Morning - Badfinger
 			},
 			wednesday: {
 				text:"wednesday",
-				id:"f4KXUr9JVng"//need to find an appropriate video...
+				id:"jI-kpVh6e1U"//10 hours nyan cat HD. need to find an appropriate video...
 			},
 			thursday: {
 				text:"thursday",
-				id:"8S227FFNwl8"
+				id:"jI-kpVh6e1U"//Thursday's Child - David Bowie
 			},
 			friday: {
 				text:"friday",
-				id:"kfVsfOSbJY0"
+				id:"kfVsfOSbJY0"//Friday - Rebecca Black
 			},
 			saturday: {
 				text:"saturday",
-				id:"8DNQRtmIMxk"
+				id:"8DNQRtmIMxk"//Saturday Night - Whigfield
 			},
 			getDay: function(date){
 				switch(date.getDay()) {
@@ -151,11 +163,22 @@
 					date: new Date("Jan 1, 2013"),
 					message: "Happy New Year!",
 					id: "4e8vfRTsFU4"
-				}/*,
+				},
 				{
-					date: new Date("May 20, 2012"),
-					message: "20th May",
-					id: "4e8vfRTsFU4"
+					date: new Date("April 1, 2012"),
+					message: "April Fools!",
+					id: "dQw4w9WgXcQ"//Never Gonna Give You Up - Rick Astley
+					//TODO: find one that has an HTML5 version... (maybe GGhExssWyE0 ?)
+				},
+				{
+					date: new Date("May 4, 2012"),
+					message: "May the 4th be with you",
+					id: "D9XYKY4Km20"
+				}/*,
+				{// For testing - always loads this video...
+					date: new Date(),
+					message: "Testing...",
+					id: "jI-kpVh6e1U"
 				}*/
 			],
 			checkDate: function(date){
@@ -179,13 +202,15 @@
 		if (isspecial){
 			message = isspecial.message;
 			theId = isspecial.id;
+			document.title = message + " | richardbrunt.co.uk";
 		} else{
 			message = weekdays.getDay(today).text;
 			theId = weekdays.getDay(today).id
+			document.title = "It's " + message + "! | richardbrunt.co.uk";
 		}
 
 		dayHeader.innerHTML = message;
-
+		// document.getElementById("date").innerHTML=today;
   		// Load the IFrame Player API code asynchronously.
 		var tag = document.createElement('script');
 		tag.src = "https://www.youtube.com/player_api";
