@@ -14,6 +14,8 @@
 			background:black;
 			margin:0;
 			padding:0;
+			font-family:"Noto Sans", sans-serif;
+			color:white;
 		}
 		body{
 			margin:0;
@@ -21,8 +23,6 @@
 		}
 		p#loading{
 			font-size:40px;
-			color:white;
-			font-family: "Noto Sans", sans-serif;
 			font-weight:400;
 			text-align: center;
 		}
@@ -30,8 +30,6 @@
 			margin:0 auto;
 		}
 		h1{
-			font-family:"Noto Sans", sans-serif;
-			color:#fff;
 			font-weight:800;
 			font-size:100px;
 			padding:0;
@@ -39,7 +37,7 @@
 			position: absolute;
 			left:10px;
 			bottom:0px;
-			z-index: 100;
+			z-index: 1;
 		}
 		iframe {
 			margin:0 auto;
@@ -47,11 +45,44 @@
 			position: absolute;
 
 		}
+		#videowrapper{
+			z-index:0;
+		}
+		div#attribs{
+			font-size:10px;
+			position:absolute;
+			top:1em;
+			right:1em;
+			margin:0;
+		}
+		div#attribs>p{
+			margin:0;
+		}
+		div#attribs>p>a{
+			color:inherit;
+			text-decoration: none;
+			border-bottom:1px dotted white;
+			transition:color 0.5s ease 0s;
+		}
+		div#attribs>p>a:hover{
+			color:rgb(4, 156, 219);
+		}
+		div#attribs>p>a:hover>span{
+			color:rgb(70, 165, 70);
+		}
 	</style>
 </head>
 <body>
 	<h1 id="theday"></h1>
-	<div id="ytplayer"><p id="loading">please wait while the video loads...</p></div>
+	<div id="videowrapper">
+		<div id="ytplayer">
+			<p id="loading">please wait while the video loads...</p>
+		</div>
+	</div>
+	<div id="attribs">
+		<p>A site by <a href="http://richardbrunt.co.uk/">Richard <span>Brunt</span></a></p>
+	</div>
+
 	<script>
 		var weekdays = {
 			sunday: {
@@ -68,7 +99,7 @@
 			},
 			wednesday: {
 				text:"wednesday",
-				id:"f4KXUr9JVng"//
+				id:"f4KXUr9JVng"//need to find an appropriate video...
 			},
 			thursday: {
 				text:"thursday",
@@ -120,7 +151,12 @@
 					date: new Date("Jan 1, 2013"),
 					message: "Happy New Year!",
 					id: "4e8vfRTsFU4"
-				}
+				}/*,
+				{
+					date: new Date("May 20, 2012"),
+					message: "20th May",
+					id: "4e8vfRTsFU4"
+				}*/
 			],
 			checkDate: function(date){
 				for (var i = 0; i < this.dates.length; i++) {
@@ -170,11 +206,16 @@
 					loop: 1,
 					rel: 0,
 					showinfo: 0,
-					iv_load_policy:3
+					iv_load_policy:3,
+					html5:1
 				}
 			});
 		}
-
+		window.onresize = function(event) { //Resizes the player when you resize the window...
+    		player = document.getElementById("ytplayer");
+    		player.setAttribute("height", window.innerHeight);
+    		player.setAttribute("width", window.innerWidth);
+		}
 
 	</script>
 </body>
